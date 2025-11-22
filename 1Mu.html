@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>Anniversary</title>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background: white;
+        transition: background 1.5s ease;
+        font-family: "Prompt", sans-serif;
+    }
+
+    #startBtn, #moreBtn {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 15px 30px;
+        font-size: 22px;
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        background: #ff7bd5;
+        color: white;
+        display: block;
+        z-index: 10;
+    }
+
+    #moreBtn {
+        display: none;
+        background: #ff4fab;
+    }
+
+    #message {
+        position: absolute;
+        top: 55%;
+        width: 100%;
+        text-align: center;
+        font-size: 40px;
+        color: #ff3e9e;
+        opacity: 0;
+        transition: opacity 1.2s ease;
+        z-index: 10;
+    }
+
+    .emoji {
+        position: fixed;
+        top: -50px;
+        font-size: 40px;
+        animation: fall 3s linear forwards;
+        pointer-events: none;
+    }
+
+    @keyframes fall {
+        0% { transform: translateY(-50px) rotate(0deg); opacity: 1; }
+        100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+    }
+</style>
+</head>
+<body>
+
+<button id="startBtn">สุขสันต์วันครบรอบ 1 เดือนน้า 💗</button>
+<div id="message"></div>
+<button id="moreBtn">กดอีกๆๆๆๆ 💞</button>
+
+<script>
+    const startBtn = document.getElementById("startBtn");
+    const moreBtn = document.getElementById("moreBtn");
+    const message = document.getElementById("message");
+
+    function spawnEmojis() {
+        const emojis = ["💖","💗","💞","💕","💘","✨","🌸","💓"];
+        for (let i = 0; i < 80; i++) { 
+            let e = document.createElement("div");
+            e.classList.add("emoji");
+            e.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+            e.style.left = Math.random() * 100 + "vw";
+            e.style.fontSize = (30 + Math.random() * 25) + "px";
+            e.style.animationDuration = (2.5 + Math.random() * 2) + "s";
+            document.body.appendChild(e);
+
+            setTimeout(() => e.remove(), 4000);
+        }
+    }
+
+    // เมื่อกดปุ่มแรก
+    startBtn.onclick = () => {
+        spawnEmojis();
+
+        startBtn.style.display = "none";
+        message.innerHTML = "สุขสันต์วันครบรอบ 1 เดือนน้า 💗";
+        message.style.opacity = 1;
+
+        setTimeout(() => {
+            moreBtn.style.display = "block";
+        }, 1800);
+    };
+
+    // เมื่อกดปุ่ม "กดอีกๆๆๆ"
+    moreBtn.onclick = () => {
+        // ลบข้อความ-ปุ่มเดิม
+        message.style.opacity = 0;
+        moreBtn.style.display = "none";
+
+        // เปลี่ยนฉากเป็นชมพูพาสเทลแบบ transition
+        document.body.style.background = "#ffd6ec";
+
+        // ข้อความทั้งหมด
+        const texts = [
+            "สุขสันต์วันเกิดและวันครบรอบ 1 เดือนนะคะ",
+            "มีความสุขมากๆนะ",
+            "เค้ารักเธอมากๆๆ😘",
+            "สุขภาพร่างกายแข็งแรง",
+            "ไม่เจ็บไม่ป่วย",
+            "อยู่กับเค้าไปนานๆนะ",
+            "ขอให้ติดมหาลัยด้วยนะๆๆ",
+            "แล้วก็ขอบคุณน้าที่อยู่กับเค้ามาจนครบ 1 เดือน",
+            "ขอบคุณมากที่เธออยู่กับเค้าตลอด💞",
+            "ดีใจมากๆๆที่มีเธอในทุกอยู่วัน 💓",
+            "พิมพ์ไรอีกดี🤔🤔",
+            "อ่อๆๆๆๆ",
+            "ขอให้น่ารักกันแบบนี้ไปเรื่อยๆนะ 💖",
+            "รักที่สุดเลยน้า 💘",
+            "จุ้บๆ รักเธอน้าา💓💞💖",
+                       "หมดแล้ววว",
+                      "กดออกได้เลย",
+                      "ยังอยู่อีกๆ",
+                        "ไม่มีไรแร้ววว",
+                        "ออกเถอะะ",
+        ];
+
+        let i = 0;
+
+        function showNext() {
+            if (i >= texts.length) return;
+
+            message.innerHTML = texts[i];
+            message.style.opacity = 1;
+
+            setTimeout(() => {
+                message.style.opacity = 0;
+                i++;
+                setTimeout(showNext, 1200);
+            }, 2000);
+        }
+
+        setTimeout(showNext, 1300);
+    };
+</script>
+
+</body>
+</html>
